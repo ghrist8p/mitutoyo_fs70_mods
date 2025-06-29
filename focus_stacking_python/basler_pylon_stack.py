@@ -36,17 +36,16 @@ cam.AutoFunctionAOIUsageIntensity.Value = True
 # Enable Exposure Auto by setting the operating mode to Continuous
 cam.ExposureAuto.Value = "Continuous"
 
+cam.StartGrabbing(pylon.GrabStrategy_LatestImageOnly)
 
 
-
-cam.StartGrabbing()
 
 timestr = time.strftime("%Y%m%d-%H%M%S")
 if not os.path.exists(timestr):
     os.makedirs(timestr)
     
 for i in range(num_img_to_save):
-    with cam.RetrieveResult(2000) as result:
+    with cam.RetrieveResult(0, pylon.TimeoutHandling_Return) as result:
     
         imageWindow.SetImage(result)
         imageWindow.Show()
